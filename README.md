@@ -8,6 +8,7 @@
 - [Usage](#usage)
 - [Training](#training)
 - [Pipes](#piping)
+- [License](#license)
 
 ## Overview
 This code is a collection of tools for templating, communicating, and parsing results from ChatGPT in a composable way.  The express intent is to use prompt engineering as a way to build "micro-models" for a specific job, and through a sort of functional composition, build these conversations into complex structures/interactions/data pipelines.

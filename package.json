@@ -1,11 +1,12 @@
 {
 	"name": "@curiecode/lamechain",
-	"version": "0.0.0.0.0.0.01",
+	"version": "0.0.000001",
 	"license": "MIT",
 	"main": "index.ts",
 	"engines": {
 		"node": ">=10"
 	},
+	"private": false,
 	"scripts": {
 		"build": "tsc",
 		"ex:train": "tsx ./examples/training",
