@@ -31,7 +31,7 @@ However, my smooth brain skated over their documents like a maglev train on its 
 
 # Installation:
 
-> :warning: **This won't work 'til I set up a proper build chain and module thinmgs.**: Try cloning instead.
+> :warning: **This won't work 'til I set up a proper build chain and module things**: Try cloning instead.
 
 - Clone: `git clone https://github.com/oliver-io/curie-code-lamechain.git`
 
