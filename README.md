@@ -3,6 +3,7 @@
 > pipeable, trainable, JSON-mediated ChatGPT conversations for the smooth-brained dev
 
 - [Overview](#overview)
+    - [Package Info](#package-info)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Training](#training)
@@ -14,6 +15,16 @@ This code is a collection of tools for templating, communicating, and parsing re
 I was recently made aware of [LangChain](https://langchain.readthedocs.io/en/latest/)  and found out that there exist rigorous solutions to this problem in the Python and emerging Typescript space (LangChain has TS support).
 
 However, my smooth brain skated over their documents like a maglev train on its way to Simpletown.  I would recommend that before anyone even consider using my code or anything like it, they assess whether or not a more rigorous solution exists for their use-case (mine is in a custom, home-brewed, half-baked game architecture, and I've decided to keep the third party libraries as light as possible, which is why I am not porting it to LangChain).
+
+### Package Info
+- Basically all Typescript
+- 0% Test Coverage
+- Used By No One but Me
+- Not Semantically Versioned (Yet)
+    - The current version `0.0.0.0.0.0.01` is accurate
+    - Do not use this code if you want stable software
+- Super Experimental; updating this as I improve my use-case for it.\
+- Feel free to use, contribute, and etc. at your own risk.  I just ask that you read [about the license](#license).
 
 <br>
 
