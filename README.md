@@ -21,7 +21,7 @@ However, my smooth brain skated over their documents like a maglev train on its 
 - 0% Test Coverage
 - Used By No One but Me
 - Not Semantically Versioned (Yet)
-    - The current version `0.0.0.0.0.0.01` is accurate
+    - The current version is inaccurate.  Version `0.0.0.0.0.0.01` is accurate but NPM won't let me be accurate.
     - Do not use this code if you want stable software
 - Super Experimental; updating this as I improve my use-case for it.
 - Feel free to use, contribute, and etc. at your own risk.  I just ask that you read [about the license](#license).
