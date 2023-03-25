@@ -181,8 +181,8 @@ export const model = new JsonConversation({
 <!-- END-CODE: ./examples/shitModels/jokeDeterminer.ts -->
 
 ```typescript
-import { model as jokeModel } from '../the/above/section';
-import { model as jokeDeterminerModel } from '../the/#usage/example';
+import { model as jokeModel } from '../the/#usage/example';
+import { model as jokeDeterminerModel } from '../the/above/section';
     
 jokeModel.pipe(jokeDeterminerModel);
 await jokeModel.message({ jokePrompt: 'a joke about pipes' });
