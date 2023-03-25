@@ -31,13 +31,22 @@ However, my smooth brain skated over their documents like a maglev train on its 
 
 # Installation:
 
-> :warning: **This won't work 'til I set up a proper build chain and module things**: Try cloning instead.
+On your machine, 
 
 - Clone: `git clone https://github.com/oliver-io/curie-code-lamechain.git`
+
+> :warning: **This won't work 'til I set up a proper build chain and module things**: Try cloning instead.
 
 - Yarn: `yarn add @curiecode/lamechain`
 
 - NPM: `yarn add @curiecode/lamechain`
+
+In the project,
+
+- `yarn` to install modules
+- `yarn ex:train` to run the example training script
+- `yarn ex:pipe` to run the example pipe script
+- more utils to come
 
 <br>
 
