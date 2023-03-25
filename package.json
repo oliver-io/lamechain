@@ -9,8 +9,7 @@
 	"scripts": {
 		"build": "tsc",
 		"ex:train": "tsx ./examples/training",
-		"ex:pipe": "tsx ./examples/pipe",
-		"ex:story": "tsx ./examples/story"
+		"ex:pipe": "tsx ./examples/pipe"
 	},
 	"dependencies": {
 		"chatgpt": "^5.1.2"
