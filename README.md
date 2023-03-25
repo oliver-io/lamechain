@@ -23,7 +23,7 @@ However, my smooth brain skated over their documents like a maglev train on its 
 - Not Semantically Versioned (Yet)
     - The current version `0.0.0.0.0.0.01` is accurate
     - Do not use this code if you want stable software
-- Super Experimental; updating this as I improve my use-case for it.\
+- Super Experimental; updating this as I improve my use-case for it.
 - Feel free to use, contribute, and etc. at your own risk.  I just ask that you read [about the license](#license).
 
 <br>
@@ -37,6 +37,8 @@ However, my smooth brain skated over their documents like a maglev train on its 
 <br>
 
 # Usage:
+
+The general pattern is to declare a conversation with some intent, some rules & restrictions, and a stated format for input and output.  After doing so, messages can be sent through the conversation and received in type-safe objects rather than strings.  These conversations support training and piping, but the general interface is as follows: 
 
 ```typescript
     import { JsonConversation } from '@curiecode/lamechain';
@@ -53,7 +55,7 @@ However, my smooth brain skated over their documents like a maglev train on its 
     const { someOutput } = model.message();
 ```
 
-An example in practice:
+An example in practice; the following model is meant generates knock-knock jokes:
 ### [`model.ts`][BasicModelFile]:
 <details> 
   <summary>Expand Code Example ⇲</summary>
@@ -93,7 +95,9 @@ export const model = new JsonConversation({
 
 # Training
 
-An example of training the above Joke-Telling model: 
+Training conversations involves giving them a set of objects which match the input-output interface.  The inputs *and outputs* are fed through ChatGPT with a slightly modified prompt which asks ChatGPT to validate that the example maps to its stochastic parrot brain or whatever; if so, we proceed with a normal conversation.  If not, the conversation will throw an error on `giveExample`.
+
+It is recommended (by me) for any complex prompts to use these kinds of examples.  Anecdotally, they seem to be very useful.  I don't have any good recommendations on a good number of examples, but I would suggest a minimum set that cover your different edge-cases.
 
 <details> 
   <summary>Expand Code Example ⇲</summary>
