@@ -9,7 +9,7 @@
 - [Pipes](#piping)
 
 ## Overview
-This code is a collection of tools for templating, communicating, and parsing results from ChatGPT in a composable way.  The express intent is to use prompt engineering as a way to build "micro-models" for a specific intent, and through a sort of functional composition, build them into complex structures/interactions/data pipelines.
+This code is a collection of tools for templating, communicating, and parsing results from ChatGPT in a composable way.  The express intent is to use prompt engineering as a way to build "micro-models" for a specific job, and through a sort of functional composition, build these conversations into complex structures/interactions/data pipelines.
 
 I was recently made aware of [LangChain](https://langchain.readthedocs.io/en/latest/)  and found out that there exist rigorous solutions to this problem in the Python and emerging Typescript space (LangChain has TS support).
 
@@ -121,9 +121,10 @@ const { jokeString } = model.message();
 
 The conversation class provides a method `pipe` which accepts another conversation; the piper (calling conversation) must have the same `responseProperties` as the `inputProperties` of the pipee (pipe conversation parameter).  This allows the decomposition of various tasks that OpenAI would normally have difficulty with due to complexity or scope; a problem broken into several distinct problems can be approached by having OpenAI provide a response for each distinct component of the problem.  An example follows, in which we run the output of the above joke-generator through a model determining if the joke is funny or not:
 
-### [`jokeDeterminer.ts`][JokeDeterminerFile]:
 <details> 
   <summary>Expand Code Example ⇲</summary>
+
+[`jokeDeterminer.ts`][JokeDeterminerFile]:
 
 <!-- BEGIN-CODE: ./examples/shitModels/jokeDeterminer.ts -->
 ```typescript
