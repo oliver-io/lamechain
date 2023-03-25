@@ -31,6 +31,10 @@ However, my smooth brain skated over their documents like a maglev train on its 
 
 # Installation:
 
+> :warning: **This won't work 'til I set up a proper build chain and module thinmgs.**: Try cloning instead.
+
+- Clone: `git clone https://github.com/oliver-io/curie-code-lamechain.git`
+
 - Yarn: `yarn add @curiecode/lamechain`
 
 - NPM: `yarn add @curiecode/lamechain`
@@ -42,6 +46,7 @@ However, my smooth brain skated over their documents like a maglev train on its 
 The general pattern is to declare a conversation with some intent, some rules & restrictions, and a stated format for input and output.  After doing so, messages can be sent through the conversation and received in type-safe objects rather than strings.  These conversations support training and piping, but the general interface is as follows: 
 
 ```typescript
+    // The following won't work without me fixing the buildchain in the coming days:
     import { JsonConversation } from '@curiecode/lamechain';
 
     const model = new JsonConversation({ logger: console }, {
