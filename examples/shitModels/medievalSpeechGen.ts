@@ -1,4 +1,4 @@
-import { JsonConversation } from "../../../";
+import { JsonConversation } from "../../";
 
 export const sayMedievalShitIfYES = new JsonConversation({
     logger: console
