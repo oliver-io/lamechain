@@ -3,10 +3,10 @@ import path from 'path';
 const blacklistedDirectories = [".yalc", "node_modules", "deps"]
 
 function *getAllCodeFiles(dir: string):Iterable<string> {
-    const codeFiles = fs.readdirSync(`./examples${dir?'/'+dir:''}`, { withFileTypes: true });
+    const codeFiles = fs.readdirSync(`${dir ?? './'}`, { withFileTypes: true });
     for (const file of codeFiles) {
         if (file.isDirectory() && !blacklistedDirectories.includes(file.name)) {
-            yield *getAllCodeFiles(file.name)
+            yield *getAllCodeFiles(`${dir}/${file.name}`)
         } else if (file.isFile() && (path.extname(file.name) === ".ts")) {
             yield `${dir}/${file.name}`
         }
@@ -15,9 +15,9 @@ function *getAllCodeFiles(dir: string):Iterable<string> {
 
 function addContent() {
     let readme = fs.readFileSync('./README.md').toString();
-    for (const file of getAllCodeFiles('./examples')) {
-        const beginTag = `<!-- BEGIN-CODE: ./examples/${file} -->`;
-        const endTag = `<!-- END-CODE: ./examples/${file} -->`; 
+    for (const file of getAllCodeFiles('./docs/examples')) {
+        const beginTag = `<!-- BEGIN-CODE: ./docs/examples/${file} -->`;
+        const endTag = `<!-- END-CODE: ./docs/examples/${file} -->`; 
         const beginEmbedIndex = readme.indexOf(beginTag);
         const endEmbedIndex = readme.indexOf(endTag);
         const filePath = `./examples/${file}`

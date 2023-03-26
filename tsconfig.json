@@ -1,6 +1,6 @@
 {
 	"extends": "@jupiterone/typescript-tools/config/typescript-node18",
-	"include": ["**/*.ts", "*.json", "assets/**/*.json"],
+	"include": ["*.ts", "package.json", "src/**/*.ts", "src/**/*.json", "README.md"],
 	"compilerOptions": {
 		"outDir": "dist",
 		"composite": true,

@@ -35,8 +35,6 @@ On your machine,
 
 - Clone: `git clone https://github.com/curiecode/lamechain.git`
 
-> :warning: **These won't work 'til I set up a proper build chain and module things**: Try cloning instead.
-
 - Yarn: `yarn add @curiecode/lamechain`
 
 - NPM: `yarn add @curiecode/lamechain`
@@ -55,7 +53,6 @@ In the project,
 The general pattern is to declare a conversation with some intent, some rules & restrictions, and a stated format for input and output.  After doing so, messages can be sent through the conversation and received in type-safe objects rather than strings.  These conversations support training and piping, but the general interface is as follows: 
 
 ```typescript
-    // The following won't work without me fixing the buildchain in the coming days:
     import { JsonConversation } from '@curiecode/lamechain';
 
     const model = new JsonConversation({ logger: console }, {
@@ -77,7 +74,7 @@ An example in practice; the following model is meant generates knock-knock jokes
 
 <!-- BEGIN-CODE: ./examples/shitModels/jokes.ts -->
 ```typescript
-import { JsonConversation } from "../..";
+import { JsonConversation } from "@curiecode/lamechain";
 
 export const model = new JsonConversation({
     logger: console
@@ -118,7 +115,7 @@ It is recommended (by me) for any complex prompts to use these kinds of examples
   <summary>Expand Code Example ⇲</summary>
 
 ```typescript
-import { TrainedConversation } from "../..";
+import { TrainedConversation } from "@curiecode/lamechain";
 import { jokeModel } from './examples/shitModels/jokes';
 
 const trainedModel = new TrainedConversation(jokeModel);

@@ -8,7 +8,7 @@
 	},
 	"private": false,
 	"scripts": {
-		"build": "tsc",
+		"build": "tsc && tsx ./docs/tools/embed",
 		"ex:train": "tsx ./examples/training",
 		"ex:pipe": "tsx ./examples/pipe"
 	},
