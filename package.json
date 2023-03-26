@@ -1,7 +1,7 @@
 {
 	"name": "@curiecode/lamechain",
 	"version": "0.0.000001",
-	"license": "MIT",
+	"license": "LAMC",
 	"main": "index.ts",
 	"engines": {
 		"node": ">=10"
