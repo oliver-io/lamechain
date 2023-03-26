@@ -1,4 +1,4 @@
-import { PrimitiveSingle } from "../types";
+import { PrimitiveSingle } from "../../types";
 
 type PrimitiveRecord = Record<string, PrimitiveSingle|PrimitiveSingle[]>;
 
