@@ -182,7 +182,7 @@ import { model as jokeModel } from '../the/#usage/example';
 import { model as jokeDeterminerModel } from '../the/above/section';
     
 jokeModel.pipe(jokeDeterminerModel);
-await jokeModel.message({ jokePrompt: 'a joke about pipes' });
+await jokeModel.send({ jokePrompt: 'a joke about pipes' });
 const jokeThatWasGenerated = jokeModel.message();
 const jokeDetermination = jokeDeterminerModel.message();
 
