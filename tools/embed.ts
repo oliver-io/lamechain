@@ -1,9 +1,8 @@
-const fs = require('fs');
-const readme = fs.readFileSync('./README.md');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 const blacklistedDirectories = [".yalc", "node_modules", "deps"]
 
-function *getAllCodeFiles(dir) {
+function *getAllCodeFiles(dir: string):Iterable<string> {
     const codeFiles = fs.readdirSync(`./examples${dir?'/'+dir:''}`, { withFileTypes: true });
     for (const file of codeFiles) {
         if (file.isDirectory() && !blacklistedDirectories.includes(file.name)) {
@@ -16,7 +15,7 @@ function *getAllCodeFiles(dir) {
 
 function addContent() {
     let readme = fs.readFileSync('./README.md').toString();
-    for (const file of getAllCodeFiles()) {
+    for (const file of getAllCodeFiles('./examples')) {
         const beginTag = `<!-- BEGIN-CODE: ./examples/${file} -->`;
         const endTag = `<!-- END-CODE: ./examples/${file} -->`; 
         const beginEmbedIndex = readme.indexOf(beginTag);
