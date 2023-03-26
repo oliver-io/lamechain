@@ -1,6 +1,6 @@
 {
 	"name": "@curiecode/lamechain",
-	"version": "0.0.4",
+	"version": "0.0.405",
 	"license": "LAMC",
 	"main": "index.ts",
 	"engines": {
@@ -9,7 +9,7 @@
 	"private": false,
 	"scripts": {
 		"build": "tsc && tsx ./docs/tools/embed && cp *.md ./dist",
-		"release": "yarn build && (cd dist && yarn publish)",
+		"release": "yarn version && yarn build && (cd dist && yarn publish)",
 		"ex:train": "tsx ./examples/training",
 		"ex:pipe": "tsx ./examples/pipe"
 	},
