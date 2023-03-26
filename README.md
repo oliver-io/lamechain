@@ -33,7 +33,7 @@ However, my smooth brain skated over their documents like a maglev train on its 
 
 On your machine, 
 
-- Clone: `git clone https://github.com/oliver-io/curie-code-lamechain.git`
+- Clone: `git clone https://github.com/curiecode/lamechain.git`
 
 > :warning: **These won't work 'til I set up a proper build chain and module things**: Try cloning instead.
 
