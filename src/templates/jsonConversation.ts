@@ -1,8 +1,7 @@
-import { StreamersonLogger } from 'streamerson';
-import { PrimitiveRecord } from '../types';
+import { LoggerContext, PrimitiveRecord } from '../../types';
 import { bulletPoints, annotatedJson, maybeExamples } from './common';
 
-function buildJsonParserFn<T>(ctx: { logger: StreamersonLogger }, responseProperties: Record<string, any>) {
+function buildJsonParserFn<T>(ctx: LoggerContext, responseProperties: Record<string, any>) {
     return function (input: string): T {
         if (input.indexOf('{') === -1) {
             const responsePropertyKeys = Object.keys(responseProperties);
@@ -46,10 +45,11 @@ type JSONResponseTemplateHelperOutput<R, I> = {
 export function JSONResponsetemplateHelper<
     InputOptions extends PrimitiveRecord,
     OutputOptions extends PrimitiveRecord
->(ctx: { logger: StreamersonLogger }, options: {
+>(ctx: LoggerContext, options: {
     inputProperties: InputOptions
     responseProperties: OutputOptions,
     examples?: boolean,
+    qualifier?: string,
     config: JSONResponseTemplateHelperInput
 }):JSONResponseTemplateHelperOutput<OutputOptions, InputOptions> {
     const { config, inputProperties, responseProperties } = options;
@@ -60,10 +60,10 @@ export function JSONResponsetemplateHelper<
             .join('\n\t')
         }`;
 
-    const exampleParser = (itemProps: InputOptions, outputProps: OutputOptions) => {
+    const exampleParser = (itemProps: InputOptions, outputProps: OutputOptions, first = false) => {
         const input = `EXAMPLE ${itemParser(itemProps)}`;
         const output = `EXAMPLE RESPONSE: \n${JSON.stringify(outputProps, null, 2)}`;
-        return `${input}\n\n${output}\n\nIf this example makes sense, send OK`;
+        return `${first ? maybeExamples() : ''}${input}\n\n${output}\n\nIf this example makes sense, send OK`;
     }
 
     const template = `Hey ChatGPT I am using you in ${config.overallContext}. I want to send you something (an INTERACTION), and I want you to ${config.motivations}, and to do that, what I will give you is a [CONTEXT] with the following: 
@@ -80,7 +80,7 @@ For each INTERACTION, I would like you to return to me the data that you generat
 }
 \`\`\`
 
-${maybeExamples(options.examples ?? false)}
+${options.qualifier ? '' : maybeExamples(options.examples ?? false)}
 `;
 
     return {

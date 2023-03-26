@@ -1,8 +1,7 @@
-import { StreamersonLogger } from 'streamerson';
-import { PrimitiveRecord } from '../..';
+import { LoggerContext, PrimitiveRecord } from '../..';
 import { bulletPoints, maybeExamples } from './common';
 
-function buildTextParserFn(ctx: { logger: StreamersonLogger }) {
+function buildTextParserFn(ctx: LoggerContext ) {
     return function (input: string):string {
         if (input.match(/generation_error/ig)) {
             ctx.logger.error({
@@ -31,7 +30,7 @@ type TextResponseTemplateHelperOutput<I> = {
 
 export function textResponseTemplateHelper<
     InputOptions extends PrimitiveRecord
->(ctx: { logger: StreamersonLogger }, options: {
+>(ctx: LoggerContext, options: {
     inputProperties: InputOptions
     examples?: boolean,
     config: TextResponseTemplateHelperInput
