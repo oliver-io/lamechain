@@ -197,7 +197,7 @@ console.log({
 
 # License
 
-*This project is licensed under the Love All My Cats (LMAC) Public License*
+*This project is licensed under the Love All My Cats (LAMC) Public License*
 
 **You need to love my cats to use this code.**  If you do not, you're actually legally not allowed to use this code, there's a [whole license file](./LICENSE.md) that you should really read if you want to use this code.
 
