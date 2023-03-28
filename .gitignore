@@ -1,8 +1,8 @@
 **/node_modules
+.dev.env
 **/dist
 .idea
 .vscode
 node_modules
 yarn-error.log
 **/*.env
-*.env

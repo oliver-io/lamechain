@@ -69,9 +69,6 @@ export function JSONResponsetemplateHelper<
     const template = `Hey ChatGPT I am using you in ${config.overallContext}. I want to send you something (an INTERACTION), and I want you to ${config.motivations}, and to do that, what I will give you is a [CONTEXT] with the following: 
     ${Object.keys(inputProperties).map(k => `\t[${k.toUpperCase()}]: ${inputProperties[k]}`).join('\n')}
 
-However, there are a few rules:
-${bulletPoints(config.rulesAndLimitations)}
-
 For each INTERACTION, I would like you to return to me the data that you generate in valid JSON markup format: (The parts in parantheses are just for you to interpret what the meaning of each field is)
 
 \`\`\`json
@@ -79,6 +76,10 @@ For each INTERACTION, I would like you to return to me the data that you generat
     ${annotatedJson(responseProperties)}
 }
 \`\`\`
+
+However, there are a few rules:
+${bulletPoints(config.rulesAndLimitations)}
+
 
 ${options.qualifier ? '' : maybeExamples(options.examples ?? false)}
 `;
