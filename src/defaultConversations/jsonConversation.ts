@@ -45,16 +45,35 @@
             });
         }
 
+        text():string {
+            if (!this.messages.length) {
+                throw new ConversationError(this.ctx, 'No messages');
+            }
+
+            return this.messages[this.messages.length - 1].text;
+        }
+
         async send(input: I | string, options?: { restart?: boolean }):Promise<JsonConversation<I, O>> {
             let response:Awaited<ReturnType<typeof startConversation>>;
             const item = typeof input === 'string' ? input : this.parser.itemParser(input);
             if (!this.lastConversationId || options?.restart) {
+                this.ctx.logger.info('\r\n')
+                this.ctx.logger.info({
+                    template: this.parser.template,
+                    firstMessage: item
+                });
+                this.ctx.logger.info('\r\n')
                 response = await startConversation(this.ctx, {
                     client: this.client, 
                     template: this.parser.template,
                     firstMessage: item
                 });
             } else {
+                this.ctx.logger.info('\r\n')
+                this.ctx.logger.info({
+                    message: item
+                });
+                this.ctx.logger.info('\r\n')
                 response = await continueConversation(this.ctx, {
                     client: this.client, 
                     conversationId: this.lastConversationId,
@@ -84,24 +103,24 @@
 
     export class TrainedConversation<I extends PrimitiveRecord, O extends PrimitiveRecord> extends JsonConversation<I, O> {
         hasExamples:boolean = false;
-        constructor(convo: JsonConversation<I, O>) {
-            super(convo, { ...convo.templateOptions, examples: true });
+        constructor(convo: JsonConversation<I, O>, options?: Partial<Parameters<typeof JSONResponsetemplateHelper>[1]>) {
+            super(convo, { ...convo.templateOptions, ...options, examples: true });
         }
 
         async qualify(qualifier: string):Promise<void> {
-            await this.send(`${qualifier}.  If that makes sense, just send me the string OK`);
+            await this.send(`QUALIFYING STATEMENT (not an interaction): ${qualifier}.  If that makes sense, just send me the string OK alone with no JSON unlike other interactions.`);
             const qualifierMessage = this.message() as Record<string, string>;
             if (!qualifierMessage) {
                 throw new ConversationError(this.ctx, qualifierMessage, 'Could not retrieve qualification message');
             }
 
-            if ((qualifierMessage.text ?? '').indexOf('OK') === -1){
+            if ((this.text() ?? '').indexOf('OK') === -1){
                 throw new ConversationError(this.ctx, qualifierMessage, 'Failed to qualify');
             }
         }
 
         async giveExample(input: I, output: O) {
-                const ex = this.parser.exampleParser(input, output);
+                let ex = this.parser.exampleParser(input, output, !this.hasExamples);
                 const message = this.lastConversationId ? await continueConversation(this.ctx, {
                     client: this.client,
                     conversationId: this.lastConversationId,
@@ -111,7 +130,6 @@
                         template: this.parser.template,
                         firstMessage: ex
                 });
-
                 if (!message) {
                     throw new ConversationError(this.ctx, 'Could not give example');
                 } else {
@@ -123,6 +141,7 @@
                     } else {
                         console.log('Training example OK.')
                     }
+                    this.hasExamples = true;
                     return this;
                 }
         }

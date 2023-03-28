@@ -10,8 +10,9 @@
 	"scripts": {
 		"build": "tsc && tsx ./docs/tools/embed && cp *.md ./dist",
 		"release": "yarn version && yarn build && (cd dist && yarn publish)",
-		"ex:train": "tsx ./examples/training",
-		"ex:pipe": "tsx ./examples/pipe"
+		"ex:train": "tsx ./docs/examples/training",
+		"ex:pipe": "tsx ./docs/examples/pipe",
+		"ex:qual": "tsx ./docs/examples/qualified"
 	},
 	"dependencies": {
 		"chatgpt": "^5.1.2"

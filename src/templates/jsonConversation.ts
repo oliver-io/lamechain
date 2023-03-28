@@ -38,7 +38,7 @@ type JSONResponseTemplateHelperInput = {
 type JSONResponseTemplateHelperOutput<R, I> = {
     template: string,
     responseParser: (input: string) => R,
-    exampleParser: (input: I, output: R) => string,
+    exampleParser: (input: I, output: R, first?: boolean) => string,
     itemParser: (input: I) => string
 }
 
@@ -49,7 +49,7 @@ export function JSONResponsetemplateHelper<
     inputProperties: InputOptions
     responseProperties: OutputOptions,
     examples?: boolean,
-    qualifier?: string,
+    qualifier?: boolean,
     config: JSONResponseTemplateHelperInput
 }):JSONResponseTemplateHelperOutput<OutputOptions, InputOptions> {
     const { config, inputProperties, responseProperties } = options;
