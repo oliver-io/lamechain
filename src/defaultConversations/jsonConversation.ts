@@ -5,15 +5,23 @@
 
     class ConversationError extends ContextError {};
 
+    type OptionExtensions =  { 
+        examples?: boolean,
+        qualifier?: boolean,
+        restart?: boolean
+        rawHook?: (message: string) => void
+    }
+
     export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveRecord> {
         parser: ReturnType<typeof JSONResponsetemplateHelper>;
         client: ReturnType<typeof getClient>;
         messages: Awaited<ReturnType<typeof startConversation>>[];
         lastConversationId: string;
         _pipe?:JsonConversation<O, any>|null = null;
+        rawHook?: (message: string) => void;
         constructor(
-            public ctx: LoggerContext | JsonConversation<I, O> & { examples?: boolean },
-            public templateOptions: Parameters<typeof JSONResponsetemplateHelper>[1],
+            public ctx: LoggerContext | (JsonConversation<I, O> & OptionExtensions),
+            public templateOptions: Parameters<typeof JSONResponsetemplateHelper>[1] & OptionExtensions,
             private clientOptions?: Parameters<typeof getClient>[1]
         ) {
             if (ctx instanceof JsonConversation) {
@@ -25,6 +33,8 @@
             }
             this.lastConversationId = '';
             this.parser = JSONResponsetemplateHelper(ctx, templateOptions);
+            const rawHook = ('rawHook' in ctx ? ctx.rawHook : templateOptions.rawHook);
+            this.rawHook = rawHook ?? (() => {});
         }
 
         get logger():Logger {
@@ -109,13 +119,8 @@
 
         async qualify(qualifier: string):Promise<void> {
             await this.send(`QUALIFYING STATEMENT (not an interaction): ${qualifier}.  If that makes sense, just send me the string OK alone with no JSON unlike other interactions.`);
-            const qualifierMessage = this.message() as Record<string, string>;
-            if (!qualifierMessage) {
-                throw new ConversationError(this.ctx, qualifierMessage, 'Could not retrieve qualification message');
-            }
-
             if ((this.text() ?? '').indexOf('OK') === -1){
-                throw new ConversationError(this.ctx, qualifierMessage, 'Failed to qualify');
+                throw new ConversationError(this.ctx, this.text(), 'Failed to qualify');
             }
         }
 
