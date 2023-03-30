@@ -67,23 +67,23 @@
             let response:Awaited<ReturnType<typeof startConversation>>;
             const item = typeof input === 'string' ? input : this.parser.itemParser(input);
             if (!this.lastConversationId || options?.restart) {
-                this.ctx.logger.info('\r\n')
-                this.ctx.logger.info({
-                    template: this.parser.template,
-                    firstMessage: item
-                });
-                this.ctx.logger.info('\r\n')
+                // this.ctx.logger.info('\r\n')
+                // this.ctx.logger.info({
+                //     template: this.parser.template,
+                //     firstMessage: item
+                // });
+                // this.ctx.logger.info('\r\n')
                 response = await startConversation(this.ctx, {
                     client: this.client, 
                     template: this.parser.template,
                     firstMessage: item
                 });
             } else {
-                this.ctx.logger.info('\r\n')
-                this.ctx.logger.info({
-                    message: item
-                });
-                this.ctx.logger.info('\r\n')
+                // this.ctx.logger.info('\r\n')
+                // this.ctx.logger.info({
+                //     message: item
+                // });
+                // this.ctx.logger.info('\r\n')
                 response = await continueConversation(this.ctx, {
                     client: this.client, 
                     conversationId: this.lastConversationId,
