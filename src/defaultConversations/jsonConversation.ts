@@ -12,6 +12,10 @@ type OptionExtensions = {
     rawHook?: (message: string) => void
 }
 
+type IncludedChatGPTProperties = {
+    id: string
+}
+
 export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveRecord> {
     parser: ReturnType<typeof JSONResponsetemplateHelper<I, O>>;
     client: ReturnType<typeof getClient>;
@@ -47,7 +51,7 @@ export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveReco
         this.lastConversationId = id;
     }
 
-    message(): O & { id: string } {
+    message(): O & IncludedChatGPTProperties {
         if (!this.initialized) {
             throw new ConversationError(this.ctx, 'Conversation not initialized');
         }
@@ -108,7 +112,7 @@ export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveReco
         return newConvo;
     }
 
-    async send(input: I | string, options?: { restart?: boolean }): Promise<O> {
+    async send(input: I | string, options?: { restart?: boolean }): Promise<O & IncludedChatGPTProperties> {
         if (!this.initialized) {
             throw new ConversationError(this.ctx, 'Conversation not initialized');
         }
