@@ -98,7 +98,7 @@
             }
         }
 
-        async send(input: I | string, options?: { restart?: boolean }):Promise<JsonConversation<I, O>> {
+        async send(input: I | string, options?: { restart?: boolean }):Promise<O> {
             if (!this.initialized) {
                 throw new ConversationError(this.ctx, 'Conversation not initialized');
             }
@@ -123,7 +123,7 @@
                     await this._pipe.send(this.message());
                 }
 
-                return this;
+                return this.message();
             }
         }
 
