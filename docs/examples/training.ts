@@ -1,13 +1,12 @@
 import './env'
 import { sadRhymer } from './shitModels/sadRhymer'
-import { TrainedConversation } from '../../'
+import { giveExample } from '../../'
 
 export async function run() {
-    const convo = new TrainedConversation(sadRhymer);
-    await convo.init();
-    await convo.giveExample({ ryhmeAttempt: 'dad' }, { rhymeResponse: 'lad' });
-    await convo.giveExample({ ryhmeAttempt: 'sad' }, { rhymeResponse: 'mad' });
-    await convo.giveExample({ ryhmeAttempt: 'glockenspiel' }, { rhymeResponse: 'NOPE' });
+    const model = await sadRhymer.init();
+    await giveExample(model, { ryhmeAttempt: 'dad' }, { rhymeResponse: 'lad' });
+    await giveExample(model, { ryhmeAttempt: 'sad' }, { rhymeResponse: 'mad' });
+    await giveExample(model, { ryhmeAttempt: 'glockenspiel' }, { rhymeResponse: 'NOPE' });
 
     for (const word of [
         'testie',
@@ -18,7 +17,7 @@ export async function run() {
         'overjoyed',
         'exuberant'
     ]) {
-        console.log({ word, response: await convo.send({ ryhmeAttempt: word }) });
+        console.log({ word, response: await model.send({ ryhmeAttempt: word }) });
     }
 }
 

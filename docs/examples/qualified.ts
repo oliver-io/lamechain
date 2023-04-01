@@ -1,15 +1,14 @@
 import './env'
 import { sadRhymer } from './shitModels/sadRhymer'
-import { TrainedConversation } from '../../'
+import { qualify, giveExample } from '../../'
 
 export async function run() {
-    const convo = new TrainedConversation(sadRhymer, { examples: true, qualifier: true });
-    await convo.init();
-    await convo.qualify('Never pick any rhymes that begin with the letters in the word "DERP"');
-    await convo.qualify('Always prefer any rhyme beginning with letters early in the alphabet (a, b, c, etc.)');
-    await convo.giveExample({ ryhmeAttempt: 'dad' }, { rhymeResponse: 'fad' });
-    await convo.giveExample({ ryhmeAttempt: 'ramburger' }, { rhymeResponse: 'NOPE' });
-    await convo.giveExample({ ryhmeAttempt: 'mad' }, { rhymeResponse: 'lad' });
+    const convo = await sadRhymer.init();
+    await qualify(convo, 'Never pick any rhymes that begin with the letters in the word "DERP"');
+    await qualify(convo, 'Always prefer any rhyme beginning with letters early in the alphabet (a, b, c, etc.)');
+    await giveExample(convo, { ryhmeAttempt: 'dad' }, { rhymeResponse: 'fad' });
+    await giveExample(convo, { ryhmeAttempt: 'ramburger' }, { rhymeResponse: 'NOPE' });
+    await giveExample(convo, { ryhmeAttempt: 'mad' }, { rhymeResponse: 'lad' });
 
     for (const word of [
         'testie',
