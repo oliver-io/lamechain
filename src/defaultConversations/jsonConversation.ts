@@ -164,7 +164,7 @@ If that makes sense, just send me the string OK alone.`);
 export async function giveExample<T extends JsonConversation<any, any>>(
     conversation: T, 
     input: Parameters<T['send']>[0], 
-    output: Awaited<ReturnType<T['send']>>
+    output: Omit<Awaited<ReturnType<T['send']>>, keyof IncludedChatGPTProperties>
 ):Promise<void> {
     let ex = conversation.parser.exampleParser(input, output, !conversation.hasExamples);
     const message = conversation.lastConversationId ? await continueConversation(conversation.ctx, {
