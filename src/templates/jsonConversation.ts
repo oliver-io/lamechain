@@ -80,8 +80,9 @@ For each INTERACTION, I would like you to return to me the data that you generat
 However, there are a few rules:
 ${bulletPoints(config.rulesAndLimitations)}
 
-
-${options.qualifier ? '' : maybeExamples(options.examples ?? false)}
+${options.qualifier ? 'Before we start, I have a few more QUALIFIERS that I will send you.' : ''}
+${options.examples ? 'I will send you EXAMPLEs before we start.' : ''}
+Before we engage in any INTERACTIONs, if this prompt makes sense, send me the string "OK" and we will continue.
 `;
 
     return {

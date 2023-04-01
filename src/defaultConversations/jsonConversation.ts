@@ -18,6 +18,7 @@
         messages: Awaited<ReturnType<typeof startConversation>>[];
         lastConversationId: string;
         _pipe?:JsonConversation<O, any>|null = null;
+        initialized = false;
         rawHook?: (message: string) => void;
         constructor(
             public ctx: LoggerContext | (JsonConversation<I, O> & OptionExtensions),
@@ -63,33 +64,47 @@
             return this.messages[this.messages.length - 1].text;
         }
 
-        async send(input: I | string, options?: { restart?: boolean }):Promise<JsonConversation<I, O>> {
-            let response:Awaited<ReturnType<typeof startConversation>>;
-            const item = typeof input === 'string' ? input : this.parser.itemParser(input);
-            if (!this.lastConversationId || options?.restart) {
-                if (this.rawHook){
-                    this.rawHook(item ? `${this.parser.template}\r${item}` : this.parser.template);
-                }
-                response = await startConversation(this.ctx, {
-                    client: this.client, 
-                    template: this.parser.template,
-                    firstMessage: item
-                });
+        validate(message: string | O): boolean {
+            if (typeof message === 'string') {
+                return message.toLowerCase().indexOf('ok') !== -1;
             } else {
-                if (this.rawHook){
-                    this.rawHook(item);
-                }
-                response = await continueConversation(this.ctx, {
-                    client: this.client, 
-                    conversationId: this.lastConversationId,
-                    message: item
-                });
+                return JSON.stringify(message).toLowerCase().indexOf('ok') !== -1;
             }
+        }
+
+        async init() {
+            const response = await startConversation(this.ctx, {
+                client: this.client, 
+                template: this.parser.template
+            });
+            if (!response) {
+                throw new ConversationError(this.ctx, 'Could not start conversation');
+            } else {
+                this.messages.push(response);
+                this.lastConversationId = response.id;
+            }
+
+            if (!this.validate(this.text())) {
+                throw new ConversationError(this.ctx, 'Could not validate template');
+            } else {
+                this.ctx.logger.info('Conversation template OK.')
+                this.initialized = true;
+            }
+        }
+
+        async send(input: I | string, options?: { restart?: boolean }):Promise<JsonConversation<I, O>> {
+            if (!this.initialized) {
+                throw new ConversationError(this.ctx, 'Conversation not initialized');
+            }
+            const item = typeof input === 'string' ? input : this.parser.itemParser(input);
             if (this.rawHook){
-                this.rawHook(response.text);
+                this.rawHook(item ? `${this.parser.template}\r${item}` : this.parser.template);
             }
-            this.messages.push(response);
-            this.lastConversationId = response.id;
+            const response = await continueConversation(this.ctx, {
+                client: this.client, 
+                conversationId: this.lastConversationId,
+                message: item
+            });
             if (!response) {
                 throw new ConversationError(this.ctx, 'Could not give example');
             } else {
@@ -116,9 +131,13 @@
         }
 
         async qualify(qualifier: string):Promise<void> {
-            await this.send(`QUALIFYING STATEMENT (not an interaction): ${qualifier}.  If that makes sense, just send me the string OK alone with no JSON unlike other interactions.`);
-            if ((this.text() ?? '').indexOf('OK') === -1){
+            await this.send(`QUALIFIER STATEMENT (not an interaction): ${qualifier}.
+
+If that makes sense, just send me the string OK alone.`);
+            if (!this.validate(this.text())) {
                 throw new ConversationError(this.ctx, this.text(), 'Failed to qualify');
+            } else {
+                this.logger.info('Qualification OK.')
             }
         }
 
