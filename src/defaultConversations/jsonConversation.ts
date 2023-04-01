@@ -34,7 +34,7 @@
             this.lastConversationId = '';
             this.parser = JSONResponsetemplateHelper(ctx, templateOptions);
             const rawHook = ('rawHook' in ctx ? ctx.rawHook : templateOptions.rawHook);
-            this.rawHook = rawHook ?? (() => {});
+            this.rawHook = rawHook ?? function() {};
         }
 
         get logger():Logger {
@@ -67,28 +67,26 @@
             let response:Awaited<ReturnType<typeof startConversation>>;
             const item = typeof input === 'string' ? input : this.parser.itemParser(input);
             if (!this.lastConversationId || options?.restart) {
-                // this.ctx.logger.info('\r\n')
-                // this.ctx.logger.info({
-                //     template: this.parser.template,
-                //     firstMessage: item
-                // });
-                // this.ctx.logger.info('\r\n')
+                if (this.rawHook){
+                    this.rawHook(item ? `${this.parser.template}\r${item}` : this.parser.template);
+                }
                 response = await startConversation(this.ctx, {
                     client: this.client, 
                     template: this.parser.template,
                     firstMessage: item
                 });
             } else {
-                // this.ctx.logger.info('\r\n')
-                // this.ctx.logger.info({
-                //     message: item
-                // });
-                // this.ctx.logger.info('\r\n')
+                if (this.rawHook){
+                    this.rawHook(item);
+                }
                 response = await continueConversation(this.ctx, {
                     client: this.client, 
                     conversationId: this.lastConversationId,
                     message: item
                 });
+            }
+            if (this.rawHook){
+                this.rawHook(response.text);
             }
             this.messages.push(response);
             this.lastConversationId = response.id;
