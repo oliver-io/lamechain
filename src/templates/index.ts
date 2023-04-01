@@ -1,2 +1,2 @@
-export * from './jsonConversation'
-export * from './textConversation'
+export * from './json'
+export * from './text'
