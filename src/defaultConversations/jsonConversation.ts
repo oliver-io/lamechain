@@ -144,7 +144,7 @@
 
 If that makes sense, just send me the string OK alone.`);
             if (!this.validate(this.text())) {
-                throw new ConversationError(this.ctx, this.text(), 'Failed to qualify');
+                throw new ConversationError(this.ctx, { text: this.text() }, 'Failed to qualify');
             } else {
                 this.logger.info('Qualification OK.')
             }
@@ -168,7 +168,7 @@ If that makes sense, just send me the string OK alone.`);
                     this.lastConversationId = message.id;
                     if (message.text.indexOf('OK') === -1) {
                         this.logger.error(message.text);
-                        throw new ConversationError(this.ctx, 'Example NOT OK');
+                        throw new ConversationError(this.ctx, { text: this.text() }, 'Example NOT OK');
                     } else {
                         console.log('Training example OK.')
                     }
