@@ -20,7 +20,7 @@ export async function run() {
         'easy'
     ]) {
         console.log('\r\n');
-        console.log({ word, response: (await convo.send({ ryhmeAttempt: word })).message() });
+        console.log({ word, response: await convo.send({ ryhmeAttempt: word })});
     }
 }
 

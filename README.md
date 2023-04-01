@@ -72,7 +72,7 @@ An example in practice; the following model is meant generates knock-knock jokes
 <details> 
   <summary>Expand Code Example ⇲</summary>
 
-<!-- BEGIN-CODE: ./examples/shitModels/jokes.ts -->
+<!-- BEGIN-CODE: ./docs/examples/shitModels/jokes.ts -->
 ```typescript
 import { JsonConversation } from "@curiecode/lamechain";
 
@@ -95,7 +95,7 @@ export const model = new JsonConversation({
     }
 });
 ```
-<!-- END-CODE: ./examples/shitModels/jokes.ts -->
+<!-- END-CODE: ./docs/examples/shitModels/jokes.ts -->
 
 ```typescript
     await model.send({ jokePrompt: 'using chatGPT to tell jokes' });
@@ -116,7 +116,7 @@ It is recommended (by me) for any complex prompts to use these kinds of examples
 
 ```typescript
 import { TrainedConversation } from "@curiecode/lamechain";
-import { jokeModel } from './examples/shitModels/jokes';
+import { jokeModel } from './docs/examples/shitModels/jokes';
 
 const trainedModel = new TrainedConversation(jokeModel);
 
@@ -153,7 +153,7 @@ The conversation class provides a method `pipe` which accepts another conversati
 
 [`jokeDeterminer.ts`][JokeDeterminerFile]:
 
-<!-- BEGIN-CODE: ./examples/shitModels/jokeDeterminer.ts -->
+<!-- BEGIN-CODE: ./docs/examples/shitModels/jokeDeterminer.ts -->
 ```typescript
 import { JsonConversation } from "../..";
 
@@ -175,7 +175,7 @@ export const model = new JsonConversation({
     }
 });
 ```
-<!-- END-CODE: ./examples/shitModels/jokeDeterminer.ts -->
+<!-- END-CODE: ./docs/examples/shitModels/jokeDeterminer.ts -->
 
 ```typescript
 import { model as jokeModel } from '../the/#usage/example';
@@ -210,5 +210,5 @@ console.log({
 ![Anastasia](https://i.imgur.com/auJrbvX.jpg)
 
 
-[BasicModelFile]: ./examples/shitModels/jokes.ts
-[JokeDeterminerFile]: ./examples/shitModels/jokeDeterminer.ts
+[BasicModelFile]: ./docs/examples/shitModels/jokes.ts
+[JokeDeterminerFile]: ./docs/examples/shitModels/jokeDeterminer.ts

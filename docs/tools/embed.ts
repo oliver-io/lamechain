@@ -20,7 +20,7 @@ function addContent() {
         const endTag = `<!-- END-CODE: ./docs/examples/${file} -->`; 
         const beginEmbedIndex = readme.indexOf(beginTag);
         const endEmbedIndex = readme.indexOf(endTag);
-        const filePath = `./examples/${file}`
+        const filePath = `./docs/examples/${file}`
         if (beginEmbedIndex > 0 && endEmbedIndex > 0) {
             const newContent = fs.readFileSync(filePath).toString();
             if (newContent) {

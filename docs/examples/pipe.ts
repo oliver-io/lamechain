@@ -23,7 +23,7 @@ export async function run() {
         'give me a favor',
         'give me my favorite'
     ]) {
-        console.log(`${word.toUpperCase()} -- ${(await conversation.send({ maybeMedievalPhrase: word })).message().isMedieval}`);
+        console.log(`${word.toUpperCase()} -- ${(await conversation.send({ maybeMedievalPhrase: word })).isMedieval}`);
     }
 }
 

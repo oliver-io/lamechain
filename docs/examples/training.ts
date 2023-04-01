@@ -18,7 +18,7 @@ export async function run() {
         'overjoyed',
         'exuberant'
     ]) {
-        console.log({ word, response: (await convo.send({ ryhmeAttempt: word })).message() });
+        console.log({ word, response: await convo.send({ ryhmeAttempt: word }) });
     }
 }
 
