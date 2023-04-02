@@ -88,6 +88,7 @@ export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveReco
         if (newConvo.rawHook) {
             newConvo.rawHook(newConvo.parser.template);
         }
+        newConvo.initialized = true;
         const response = await startConversation(newConvo.ctx, {
             client: newConvo.client,
             template: newConvo.parser.template
@@ -105,8 +106,7 @@ export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveReco
         if (!newConvo.validate(newConvo.text())) {
             throw new ConversationError(newConvo.ctx, { text: newConvo.text() }, 'Could not validate template');
         } else {
-            newConvo.ctx.logger.info('Conversation template OK.')
-            newConvo.initialized = true;
+            newConvo.ctx.logger.info('Conversation template OK.');
         }
 
         return newConvo;
