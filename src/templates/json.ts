@@ -1,5 +1,8 @@
 import { LoggerContext, PrimitiveRecord } from '../../types';
+import { ContextError } from '../util/contextError';
 import { bulletPoints, annotatedJson, maybeExamples } from './common';
+
+class ParserContextError extends ContextError {}
 
 function buildJsonParserFn<T>(ctx: LoggerContext, responseProperties: Record<string, any>) {
     return function (input: string): T {
@@ -11,7 +14,7 @@ function buildJsonParserFn<T>(ctx: LoggerContext, responseProperties: Record<str
                 } as unknown as T;
             }
 
-            throw new Error("Could not JSON parse response from ChatGPT")
+            throw new ParserContextError(ctx, { input }, "Could not JSON parse response from ChatGPT")
         }
         let substring = input.substring(input.indexOf('{'), input.indexOf('}') + 1);
         // newlines:
@@ -23,8 +26,7 @@ function buildJsonParserFn<T>(ctx: LoggerContext, responseProperties: Record<str
         try {
             return (JSON.parse(substring) as unknown as T);
         } catch (err) {
-            ctx.logger.error({ err, substring });
-            throw new Error('Could not parse response from ChatGPT');
+            throw new ParserContextError(ctx, { err, JSONsubstring: substring, input }, 'Could not parse response from ChatGPT');
         }
     }
 }
