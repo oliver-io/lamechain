@@ -141,6 +141,34 @@ export class JsonConversation<I extends PrimitiveRecord, O extends PrimitiveReco
         }
     }
 
+    async sendText(item: string, options?: { restart?: boolean }): Promise<string> {
+        if (!this.initialized) {
+            throw new ConversationError(this.ctx, 'Conversation not initialized');
+        }
+        if (this.rawHook) {
+            this.rawHook(item);
+        }
+        const response = await continueConversation(this.ctx, {
+            client: this.client,
+            conversationId: this.lastConversationId,
+            message: item
+        });
+        if (this.rawHook) {
+            this.rawHook(response.text);
+        }
+        if (!response) {
+            throw new ConversationError(this.ctx, 'Could not give example');
+        } else {
+            this.messages.push(response);
+            this.lastConversationId = response.id;
+            if (this._pipe) {
+                await this._pipe.send(this.text());
+            }
+
+            return this.text();
+        }
+    }
+
     pipe<O2 extends PrimitiveRecord>(input: JsonConversation<O, O2>) {
         this._pipe = input;
         return this;

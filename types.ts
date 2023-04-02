@@ -2,7 +2,7 @@ export type PrimitiveSingle = string | number | boolean | undefined | null;
 export type PrimitiveValue = PrimitiveSingle | Array<PrimitiveSingle>;
 export type PrimitiveRecord = Record<string, PrimitiveValue>;
 
-export type LoggerContext = { 
+export type LoggerContext = {
     logger: Logger,
     debug?: boolean
 };
