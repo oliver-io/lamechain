@@ -179,7 +179,15 @@ export async function qualify<T extends JsonConversation<any, any>>(
     conversation: T, 
     qualifier: string
 ): Promise<void> {
-    const response = await conversation.sendText(`QUALIFIER STATEMENT (not an interaction): ${qualifier}.
+    let message = qualifier;
+    if (!conversation.messages[0]) {
+        message = `Before we start, I have one or more QUALIFIERs that I will send you.
+
+These should be thought of as an addendum to the previous prompt.  The first one is:
+
+${qualifier}`;
+    }
+    const response = await conversation.sendText(`QUALIFIER statement (not an interaction): ${qualifier}.
 
 If that makes sense, just send me the string OK alone.`);
     if (!conversation.validate(response)) {
