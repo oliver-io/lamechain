@@ -179,10 +179,10 @@ export async function qualify<T extends JsonConversation<any, any>>(
     conversation: T, 
     qualifier: string
 ): Promise<void> {
-    await conversation.send(`QUALIFIER STATEMENT (not an interaction): ${qualifier}.
+    const response = await conversation.sendText(`QUALIFIER STATEMENT (not an interaction): ${qualifier}.
 
 If that makes sense, just send me the string OK alone.`);
-    if (!conversation.validate(conversation.text())) {
+    if (!conversation.validate(response)) {
         throw new ConversationError(conversation.ctx, { text: conversation.text() }, 'Failed to qualify');
     } else {
         conversation.logger.info('Qualification OK.')
