@@ -1,6 +1,6 @@
 {
 	"name": "@curiecode/lamechain",
-	"version": "0.0.4193",
+	"version": "0.0.4194",
 	"license": "LAMC",
 	"main": "index.ts",
 	"engines": {
