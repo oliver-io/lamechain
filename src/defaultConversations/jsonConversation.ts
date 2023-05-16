@@ -221,7 +221,7 @@ export async function giveExample<T extends JsonConversation<any, any>>(
             conversation.logger.error(message.text);
             throw new ConversationError(conversation.ctx, { text: conversation.text() }, 'Example NOT OK');
         } else {
-            console.log('Training example OK.')
+            conversation.logger.info('Training example OK.')
         }
         conversation.hasExamples = true;
         return;
