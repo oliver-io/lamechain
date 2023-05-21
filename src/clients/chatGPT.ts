@@ -1,4 +1,4 @@
-import { ChatGPTAPI } from 'chatgpt';
+import { ChatGPTAPI, ChatGPTError } from 'chatgpt';
 import { LoggerContext } from '../../types';
 import { ContextError } from '../util/contextError';
 import { retry } from '@lifeomic/attempt';
@@ -63,7 +63,7 @@ export async function startConversation(ctx: LoggerContext, options: StartConver
         }
     } catch(err) {
         if (err.statusCode && err.statusCode == 429) {
-            ctx.logger.info(`Rate limited, retrying ${retryOptions.maxAttempts} times with ${retryOptions.delay}ms`);
+            ctx.logger.info({ err }, `Rate limited, retrying ${retryOptions.maxAttempts} times with ${retryOptions.delay}ms`);
             await new Promise((resolve)=>setTimeout(resolve, retryOptions.delay));
             return await retry(async () => {
                 return startConversation(ctx, options);
@@ -85,7 +85,7 @@ export async function continueConversation(ctx: LoggerContext, options: Continue
         }
     } catch(err) {
         if (err.statusCode && err.statusCode == 429) {
-            ctx.logger.info(`Rate limited, retrying ${retryOptions.maxAttempts} times with ${retryOptions.delay}ms`);
+            ctx.logger.info({ err }, `Rate limited, retrying ${retryOptions.maxAttempts} times with ${retryOptions.delay}ms`);
             await new Promise((resolve)=>setTimeout(resolve, retryOptions.delay));
             return await retry(async () => {
                 return continueConversation(ctx, options);
