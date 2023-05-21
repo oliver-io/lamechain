@@ -1,6 +1,6 @@
 {
 	"name": "@curiecode/lamechain",
-	"version": "0.0.4196",
+	"version": "0.0.4197",
 	"license": "LAMC",
 	"main": "index.ts",
 	"engines": {
@@ -15,6 +15,7 @@
 		"ex:qual": "tsx ./docs/examples/qualified"
 	},
 	"dependencies": {
+		"@lifeomic/attempt": "^3.0.3",
 		"chatgpt": "^5.1.2"
 	},
 	"devDependencies": {
